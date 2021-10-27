@@ -2,11 +2,13 @@
 
 Name:           ukui-search
 Version:        0.4.1
-Release:        1
+Release:        2
 Summary:        Advanced ukui menu
 License:        GPL-3.0
 URL:            http://www.ukui.org
 Source0:        %{name}-%{version}.tar.gz
+
+Patch0:        0001-Update-changelog.patch
 
 BuildRequires: pkgconf
 BuildRequires: gsettings-qt-devel
@@ -81,6 +83,7 @@ permanent.
 
 %prep
 %setup -q
+%patch0 -p1
 
 %build
 mkdir build && cd build
@@ -132,6 +135,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
-* Mon Oct 25 2021 tanyulong <tanyulong@kylinos.cn> - 3.0.2-3
+* Wed Oct 27 2021 tanyulong <tanyulong@kylin0s.cn> - 0.4.1-2
+-  Update changelog
+
+* Mon Oct 25 2021 tanyulong <tanyulong@kylinos.cn> - 0.4.1-1
 - Init package for openEuler
 
