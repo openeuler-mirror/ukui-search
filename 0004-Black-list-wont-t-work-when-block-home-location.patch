@@ -1,0 +1,36 @@
+From 5cd5f93db4c72b048ad7da484ee6237fabb4a023 Mon Sep 17 00:00:00 2001
+From: tanyulong <tanyulong@kylinos.cn>
+Date: Mon, 1 Nov 2021 14:12:50 +0800
+Subject: [PATCH] Black list wont't work when block home location
+
+---
+ libsearch/index/search-manager.cpp | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
+
+diff --git a/libsearch/index/search-manager.cpp b/libsearch/index/search-manager.cpp
+index c501594..5f1ea8a 100644
+--- a/libsearch/index/search-manager.cpp
++++ b/libsearch/index/search-manager.cpp
+@@ -398,6 +398,10 @@ DirectSearch::DirectSearch(QString keyword, QQueue<QString> *searchResultFile, Q
+ }
+ 
+ void DirectSearch::run() {
++    QStringList blockList = GlobalSettings::getInstance()->getBlockDirs();
++    if(blockList.contains(QStandardPaths::writableLocation(QStandardPaths::HomeLocation).remove(0,1), Qt::CaseSensitive)) {
++	    return;
++    }
+     QQueue<QString> bfs;
+     bfs.enqueue(QStandardPaths::writableLocation(QStandardPaths::HomeLocation));
+     QFileInfoList list;
+@@ -405,7 +409,7 @@ void DirectSearch::run() {
+     // QDir::Hidden
+     dir.setFilter(QDir::Dirs | QDir::Files | QDir::NoDotAndDotDot);
+     dir.setSorting(QDir::DirsFirst);
+-    QStringList blockList = GlobalSettings::getInstance()->getBlockDirs();
++    //QStringList blockList = GlobalSettings::getInstance()->getBlockDirs();
+     while(!bfs.empty()) {
+         dir.setPath(bfs.dequeue());
+         list = dir.entryInfoList();
+-- 
+2.30.0
+
