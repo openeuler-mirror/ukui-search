@@ -1,0 +1,28 @@
+From 182bfe6bd32ca098008ca50f09bedf61fe3ef558 Mon Sep 17 00:00:00 2001
+From: tanyulong <tanyulong@kylinos.cn>
+Date: Thu, 2 Dec 2021 10:13:42 +0800
+Subject: [PATCH] update debian changelog
+
+---
+ debian/changelog | 8 ++++++++
+ 1 file changed, 8 insertions(+)
+
+diff --git a/debian/changelog b/debian/changelog
+index 79445c9..7f1185a 100644
+--- a/debian/changelog
++++ b/debian/changelog
+@@ -37,3 +37,11 @@ ukui-search (0.4.1-1~0803) unstable; urgency=medium
+   * Initial release.
+ 
+  -- handsome_feng <jianfengli@ubuntukylin.com>  Thu, 05 Aug 2021 15:58:06 +0800
++ukui-search (0.1.1+0219-1) v101; urgency=medium
++
++  * Remove QWebEngineView dependence.
++  * Remove friso dependence.
++  * Update debian/control.
++
++ -- zhangpengfei <zhangpengfei@kylinos.cn>  Fri, 19 Feb 2021 11:37:16 +0800
++
+-- 
+2.30.0
+
