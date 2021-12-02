@@ -2,7 +2,7 @@
 
 Name:           ukui-search
 Version:        0.4.1
-Release:        6
+Release:        7
 Summary:        Advanced ukui menu
 License:        GPL-3.0
 URL:            http://www.ukui.org
@@ -13,6 +13,7 @@ Patch1:        0002-fix-Index-crash-when-meet-encrypt-doc-files.patch
 Patch2:	       0003-File-name-is-obscured-when-it-s-too-long-in-detail-page.patch
 Patch3:	       0004-Black-list-wont-t-work-when-block-home-location.patch
 Patch4:        0005-Update-changelog-for-easy-view.patch
+Patch5:        0006-update-debian-changelog.patch
 
 BuildRequires: pkgconf
 BuildRequires: gsettings-qt-devel
@@ -92,6 +93,7 @@ permanent.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 
 %build
 mkdir build && cd build
@@ -143,6 +145,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Thu Dec 02 2021 tanyulong <tanyulong@kylinos.cn> - 0.4.1-7
+- Update debian/changelog 
+
 * Thu Nov 11  2021 tanyulong <tanyulong@kylinos.cn> - 0.4.1-6
 - Update changelog for easy view
 
