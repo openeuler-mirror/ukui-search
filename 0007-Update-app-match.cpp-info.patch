@@ -1,0 +1,24 @@
+From 3118f367f10657c2c9e2da3df17668565810432f Mon Sep 17 00:00:00 2001
+From: tanyulong <tanyulong@kylinos.cn>
+Date: Fri, 3 Dec 2021 09:49:54 +0800
+Subject: [PATCH] Update app-match.cpp info
+
+---
+ libsearch/appsearch/app-match.cpp | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/libsearch/appsearch/app-match.cpp b/libsearch/appsearch/app-match.cpp
+index 8ad8d31..d7d9fd4 100644
+--- a/libsearch/appsearch/app-match.cpp
++++ b/libsearch/appsearch/app-match.cpp
+@@ -34,6 +34,7 @@ AppMatch::AppMatch(QObject *parent) : QThread(parent)
+ {
+     m_watchAppDir = new QFileSystemWatcher(this);
+     m_watchAppDir->addPath("/usr/share/applications/");
++    //This part is not right?
+     QDir androidPath(QDir::homePath() + "/.local/share/applications/");
+     if(androidPath.exists()) {
+         m_watchAppDir->addPath(QDir::homePath() + "/.local/share/applications/");
+-- 
+2.30.0
+
