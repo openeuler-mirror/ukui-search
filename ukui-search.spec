@@ -2,7 +2,7 @@
 
 Name:           ukui-search
 Version:        0.4.1
-Release:        8
+Release:        9
 Summary:        Advanced ukui menu
 License:        GPL-3.0
 URL:            http://www.ukui.org
@@ -15,6 +15,7 @@ Patch3:	       0004-Black-list-wont-t-work-when-block-home-location.patch
 Patch4:        0005-Update-changelog-for-easy-view.patch
 Patch5:        0006-update-debian-changelog.patch
 Patch6:        0007-Update-app-match.cpp-info.patch
+Patch7:        0008-Modified-fifo-path.patch
 
 BuildRequires: pkgconf
 BuildRequires: gsettings-qt-devel
@@ -96,6 +97,7 @@ permanent.
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
+%patch7 -p1
 
 %build
 mkdir build && cd build
@@ -147,6 +149,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Tue Dec 07 2021 tanyulong <tanyulong@kylinos.cn> - 0.4.1-9
+- Modified fifo path
+
 * Fri Dec 03 2021 tanyulong <tanyulong@kylinos.cn> - 0.4.1-8
 - Update app match.cpp info
 
