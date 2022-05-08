@@ -2,7 +2,7 @@
 
 Name:           ukui-search
 Version:        0.4.1
-Release:        9
+Release:        10
 Summary:        Advanced ukui menu
 License:        GPL-3.0
 URL:            http://www.ukui.org
@@ -30,6 +30,7 @@ BuildRequires: kf5-kwindowsystem-devel
 BuildRequires: qt5-qtx11extras-devel
 BuildRequires: uchardet-devel
 BuildRequires: poppler-qt5-devel 
+BuildRequires: ukui-interface 
 
 
 
@@ -149,6 +150,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Mon May 09 2022 pei-jiankang <peijiankang@kylinos.cn> - 0.4.1-10
+- add ukui-interface BuildRequires
+
 * Tue Dec 07 2021 tanyulong <tanyulong@kylinos.cn> - 0.4.1-9
 - Modified fifo path
 
