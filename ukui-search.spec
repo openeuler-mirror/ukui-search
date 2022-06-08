@@ -2,9 +2,9 @@
 
 Name:           ukui-search
 Version:        0.4.1
-Release:        10
+Release:        11
 Summary:        Advanced ukui menu
-License:        GPL-3.0
+License:        GPL-2.0-or-later and GPL-3.0-or-later and Apache-2.0
 URL:            http://www.ukui.org
 Source0:        %{name}-%{version}.tar.gz
 
@@ -150,6 +150,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Mon May 23 2022 tanyulong <tanyulong@kylinos.cn> - 0.4.1-11
+- Improve the project according to the requirements of compliance improvement
+
 * Mon May 09 2022 pei-jiankang <peijiankang@kylinos.cn> - 0.4.1-10
 - add ukui-interface BuildRequires
 
