@@ -1,0 +1,33 @@
+From 53bb749a41bfb68fec3772aa6f7f7f7da9486c17 Mon Sep 17 00:00:00 2001
+From: peijiankang <peijiankang@kylinos.cn>
+Date: Tue, 21 Jun 2022 14:57:30 +0800
+Subject: [PATCH] fix compile error of ukui-search
+
+---
+ libsearch/file-utils.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/libsearch/file-utils.h b/libsearch/file-utils.h
+index 6e8a617..43547ee 100644
+--- a/libsearch/file-utils.h
++++ b/libsearch/file-utils.h
+@@ -39,14 +39,14 @@
+ #include <QFontMetrics>
+ #include <QLabel>
+ 
+-#include <quazip/quazipfile.h>
++#include <quazip5/quazipfile.h>
+ #include <stdio.h>
+ #include <unistd.h>
+ #include <stdlib.h>
+ #include <string.h>
+ #include <sys/stat.h>
+ #include <fcntl.h>
+-#include <quazip/quazip.h>
++#include <quazip5/quazip.h>
+ #include <uchardet/uchardet.h>
+ //#include <poppler-qt5.h>
+ #include <poppler/qt5/poppler-qt5.h>
+-- 
+2.33.0
+
