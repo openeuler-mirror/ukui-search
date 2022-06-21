@@ -1,21 +1,13 @@
 %define debug_package %{nil}
 
 Name:           ukui-search
-Version:        0.4.1
-Release:        11
+Version:        0.4.2
+Release:        1
 Summary:        Advanced ukui menu
 License:        GPL-2.0-or-later and GPL-3.0-or-later and Apache-2.0
 URL:            http://www.ukui.org
-Source0:        %{name}-%{version}.tar.gz
-
-Patch0:        0001-Update-changelog.patch
-Patch1:        0002-fix-Index-crash-when-meet-encrypt-doc-files.patch
-Patch2:	       0003-File-name-is-obscured-when-it-s-too-long-in-detail-page.patch
-Patch3:	       0004-Black-list-wont-t-work-when-block-home-location.patch
-Patch4:        0005-Update-changelog-for-easy-view.patch
-Patch5:        0006-update-debian-changelog.patch
-Patch6:        0007-Update-app-match.cpp-info.patch
-Patch7:        0008-Modified-fifo-path.patch
+Source0:        %{name}-%{version}.tar.xz
+Patch01:        0001-fix-compile-error-of-ukui-search.patch
 
 BuildRequires: pkgconf
 BuildRequires: gsettings-qt-devel
@@ -32,12 +24,10 @@ BuildRequires: uchardet-devel
 BuildRequires: poppler-qt5-devel 
 BuildRequires: ukui-interface 
 
-
-
+Requires: libukui-search0 ukui-search-systemdbus
 
 %description
  Portable, efficient middle-ware for different kinds of mail access
-
 
 %package -n libchinese-segmentation0
 Summary:  libs
@@ -49,8 +39,6 @@ Provides: libchinese-segmentation
  .This package contains a few runtime libraries needed by
  libsearch.
 
-
-
 %package -n libchinese-segmentation-dev
 Summary:  libs
 License:  LGPLv2+
@@ -61,25 +49,22 @@ Provides: libchinese-segmentation
  .This package contains a few runtime libraries needed by
  libsearch.
 
-
 %package -n libukui-search0
 Summary:  libs
 License:  LGPLv2+
 Provides: libukui-search
+Requires: libchinese-segmentation0 ukui-search-systemdbus
 
 %description -n libukui-search0
 Libraries for ukui-search
 
-
-
 %package -n libukui-search-dev
 Summary:  libdevel
 License:  LGPLv2+
+Requires: lbukui-search0 ibchinese-segmentation0 ukui-search-systemdbus
 
 %description -n libukui-search-dev
 Libraries for  ukui-search(development files).
-
-
 
 %package -n ukui-search-systemdbus
 Summary:  libdevel
@@ -91,14 +76,7 @@ permanent.
 
 %prep
 %setup -q
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch6 -p1
-%patch7 -p1
+%patch01 -p1
 
 %build
 mkdir build && cd build
@@ -110,46 +88,44 @@ rm -rf $RPM_BUILD_ROOT
 cd %{_builddir}/%{name}-%{version}/build
 make INSTALL_ROOT=%{buildroot} install
 
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files 
-/usr/share/applications/ukui-search-menu.desktop
-/etc/xdg/autostart/ukui-search.desktop
-/usr/bin/ukui-search
-/usr/include/ukui-search/*.h
-/usr/share/glib-2.0/schemas/org.ukui.log4qt.ukui-search.gschema.xml
-/usr/share/glib-2.0/schemas/org.ukui.search.data.gschema.xml
+%{_bindir}/ukui-search
+%{_sysconfdir}/xdg/autostart/*.desktop
+%{_datadir}/applications/*.desktop
+#%{_datadir}/ukui-search/translations/*.qm
+%{_datadir}/glib-2.0/schemas/*.xml
+%{_includedir}/ukui-search/*.h
 
 %files -n libchinese-segmentation0
-/usr/lib64/libchinese-segmentation.so.*
-/usr/share/ukui-search/res/dict/*.utf8
+%{_libdir}/libchinese-segmentation.so.*
+%{_datadir}/ukui-search/res/dict/*.utf8
 
 %files -n libchinese-segmentation-dev
-/usr/include/chinese-seg/*
-/usr/lib64/libchinese-segmentation.so
-
+%{_includedir}/chinese-seg/*
+%{_libdir}/libchinese-segmentation.so
 
 %files -n libukui-search0
-/usr/lib64/libukui-search.so.*
-
+%{_libdir}/libukui-search.so.*
 
 %files -n libukui-search-dev
-/usr/include/ukui-search/*
-/usr/lib64/libukui-search.so
+%{_includedir}/ukui-search/*
+%{_libdir}/libukui-search.so
 
 
 %files -n ukui-search-systemdbus
-/usr/share/dbus-1/system-services/com.ukui.search.qt.systemdbus.service
-/etc/dbus-1/system.d/com.ukui.search.qt.systemdbus.conf
-/usr/bin/ukui-search-systemdbus
-
-
-
-
+%{_datadir}/dbus-1/system-services/com.ukui.search.qt.systemdbus.service
+%{_sysconfdir}/dbus-1/system.d/com.ukui.search.qt.systemdbus.conf
+%{_bindir}/ukui-search-systemdbus
 
 
 %changelog
+* Tue Jun 21 2022 peijiankang <peijiankang@kylinos.cn> - 0.4.2-1
+- update version to 0.4.2
+
 * Mon May 23 2022 tanyulong <tanyulong@kylinos.cn> - 0.4.1-11
 - Improve the project according to the requirements of compliance improvement
 
