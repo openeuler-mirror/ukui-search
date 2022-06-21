@@ -2,7 +2,7 @@
 
 Name:           ukui-search
 Version:        0.4.2
-Release:        1
+Release:        2
 Summary:        Advanced ukui menu
 License:        GPL-2.0-or-later and GPL-3.0-or-later and Apache-2.0
 URL:            http://www.ukui.org
@@ -88,6 +88,8 @@ rm -rf $RPM_BUILD_ROOT
 cd %{_builddir}/%{name}-%{version}/build
 make INSTALL_ROOT=%{buildroot} install
 
+mkdir -p %{buildroot}/usr/share/ukui-search/translations
+cp -r %{_builddir}/%{name}-%{version}/build/src/.qm/*.qm %{buildroot}/usr/share/ukui-search/translations/
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -96,7 +98,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_bindir}/ukui-search
 %{_sysconfdir}/xdg/autostart/*.desktop
 %{_datadir}/applications/*.desktop
-#%{_datadir}/ukui-search/translations/*.qm
+%{_datadir}/ukui-search/translations/*.qm
 %{_datadir}/glib-2.0/schemas/*.xml
 %{_includedir}/ukui-search/*.h
 
@@ -123,6 +125,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Tue Jun 21 2022 peijiankang <peijiankang@kylinos.cn> - 0.4.2-2
+- add translation files
+
 * Tue Jun 21 2022 peijiankang <peijiankang@kylinos.cn> - 0.4.2-1
 - update version to 0.4.2
 
