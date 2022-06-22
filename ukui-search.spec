@@ -2,7 +2,7 @@
 
 Name:           ukui-search
 Version:        0.4.2
-Release:        2
+Release:        3
 Summary:        Advanced ukui menu
 License:        GPL-2.0-or-later and GPL-3.0-or-later and Apache-2.0
 URL:            http://www.ukui.org
@@ -16,7 +16,7 @@ BuildRequires: qtchooser
 BuildRequires: qt5-qtscript-devel
 BuildRequires: qt5-qttools-devel
 BuildRequires: xapian-core-devel
-BuildRequires: quazip-qt5-devel  
+BuildRequires: quazip-qt5-devel  quazip-qt5
 BuildRequires: glib2-devel
 BuildRequires: kf5-kwindowsystem-devel
 BuildRequires: qt5-qtx11extras-devel
@@ -24,7 +24,7 @@ BuildRequires: uchardet-devel
 BuildRequires: poppler-qt5-devel 
 BuildRequires: ukui-interface 
 
-Requires: libukui-search0 ukui-search-systemdbus
+Requires: libukui-search0 ukui-search-systemdbus quazip-qt5
 
 %description
  Portable, efficient middle-ware for different kinds of mail access
@@ -61,7 +61,7 @@ Libraries for ukui-search
 %package -n libukui-search-dev
 Summary:  libdevel
 License:  LGPLv2+
-Requires: lbukui-search0 ibchinese-segmentation0 ukui-search-systemdbus
+Requires: libukui-search0 libchinese-segmentation0 ukui-search-systemdbus
 
 %description -n libukui-search-dev
 Libraries for  ukui-search(development files).
@@ -125,6 +125,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Wed Jun 22 2022 peijiankang <peijiankang@kylinos.cn> - 0.4.2-3
+- fix install error
+
 * Tue Jun 21 2022 peijiankang <peijiankang@kylinos.cn> - 0.4.2-2
 - add translation files
 
