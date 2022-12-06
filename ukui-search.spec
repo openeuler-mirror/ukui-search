@@ -1,13 +1,12 @@
 %define debug_package %{nil}
 
 Name:           ukui-search
-Version:        0.4.2
-Release:        3
-Summary:        Advanced ukui menu
+Version:        3.1
+Release:        1
+Summary:        a user-wide desktop search feature of UKUI desktop environment
 License:        GPL-2.0-or-later and GPL-3.0-or-later and Apache-2.0
 URL:            http://www.ukui.org
-Source0:        %{name}-%{version}.tar.xz
-Patch01:        0001-fix-compile-error-of-ukui-search.patch
+Source0:        %{name}-%{version}.tar.gz
 
 BuildRequires: pkgconf
 BuildRequires: gsettings-qt-devel
@@ -23,98 +22,103 @@ BuildRequires: qt5-qtx11extras-devel
 BuildRequires: uchardet-devel
 BuildRequires: poppler-qt5-devel 
 BuildRequires: ukui-interface 
+BuildRequires: libqtxdg-devel
+BuildRequires: libukcc-devel
+BuildRequires: opencv
+BuildRequires: tesseract-devel
+
 
 Requires: libukui-search0 ukui-search-systemdbus quazip-qt5
 
 %description
- Portable, efficient middle-ware for different kinds of mail access
+ukui-search is a user-wide desktop search feature of UKUI desktop environment
 
 %package -n libchinese-segmentation0
-Summary:  libs
+Summary:  Libraries for chinese-segmentation
 License:  LGPLv2+
 Provides: libchinese-segmentation
  
 %description -n libchinese-segmentation0
- Libraries for chinese-segmentation
  .This package contains a few runtime libraries needed by
  libsearch.
 
-%package -n libchinese-segmentation-dev
-Summary:  libs
-License:  LGPLv2+
-Provides: libchinese-segmentation
+%package -n libchinese-segmentation-devel
+Summary:  Libraries for chinese-segmentation development
+Requires: libchinese-segmentation0
 
-%description -n libchinese-segmentation-dev
- Libraries for chinese-segmentation
- .This package contains a few runtime libraries needed by
- libsearch.
+%description -n libchinese-segmentation-devel
+%{summary}.
 
 %package -n libukui-search0
-Summary:  libs
-License:  LGPLv2+
+Summary:  Libraries for ukui-search
 Provides: libukui-search
 Requires: libchinese-segmentation0 ukui-search-systemdbus
 
 %description -n libukui-search0
-Libraries for ukui-search
+%{summary}.
 
-%package -n libukui-search-dev
-Summary:  libdevel
-License:  LGPLv2+
+%package -n libukui-search-devel
+Summary:  Libraries for  ukui-search(development files).
 Requires: libukui-search0 libchinese-segmentation0 ukui-search-systemdbus
 
-%description -n libukui-search-dev
-Libraries for  ukui-search(development files).
+%description -n libukui-search-devel
+%{summary}.
 
 %package -n ukui-search-systemdbus
-Summary:  libdevel
-License:  LGPLv2+
+Summary:  ukui-search-systemdbus is a systembus interface to modify max_user_watches nums permanent.
 
 %description -n ukui-search-systemdbus
-ukui-search-systemdbus is a systembus interface to modify max_user_watches nums 
-permanent.
+%{summary}.
 
 %prep
 %setup -q
-%patch01 -p1
 
 %build
 mkdir build && cd build
 qmake-qt5 ..
-make
-
+make -j4
+cd ..
 %install
 rm -rf $RPM_BUILD_ROOT 
-cd %{_builddir}/%{name}-%{version}/build
+cd build
 make INSTALL_ROOT=%{buildroot} install
 
-mkdir -p %{buildroot}/usr/share/ukui-search/translations
-cp -r %{_builddir}/%{name}-%{version}/build/src/.qm/*.qm %{buildroot}/usr/share/ukui-search/translations/
+mkdir -p %{buildroot}/usr/share/ukui-search/translations/
+cp -r %{_builddir}/%{name}-%{version}/build/frontend/.qm/*.qm %{buildroot}/usr/share/ukui-search/translations/
+cp -r %{_builddir}/%{name}-%{version}/build/libsearch/.qm/*.qm %{buildroot}/usr/share/ukui-search/translations/
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files 
 %{_bindir}/ukui-search
+%{_bindir}/ukui-search-service
+%{_bindir}/ukui-search-app-data-service
 %{_sysconfdir}/xdg/autostart/*.desktop
 %{_datadir}/applications/*.desktop
-%{_datadir}/ukui-search/translations/*.qm
+%{_datadir}/ukui-search/translations/tr.qm
+%{_datadir}/ukui-search/translations/bo.qm
+%{_datadir}/ukui-search/translations/zh_CN.qm
 %{_datadir}/glib-2.0/schemas/*.xml
-%{_includedir}/ukui-search/*.h
+%{_libdir}/ukui-control-center/*
+%{_datadir}/ukui-search/search-ukcc-plugin/translations/*
+%{_datadir}/ukui-search/search-ukcc-plugin/image/*
 
 %files -n libchinese-segmentation0
 %{_libdir}/libchinese-segmentation.so.*
-%{_datadir}/ukui-search/res/dict/*.utf8
+%{_datadir}/ukui-search/res/dict/*
 
-%files -n libchinese-segmentation-dev
+%files -n libchinese-segmentation-devel
 %{_includedir}/chinese-seg/*
 %{_libdir}/libchinese-segmentation.so
 
 %files -n libukui-search0
 %{_libdir}/libukui-search.so.*
+%{_datadir}/ukui-search/translations/libukui-search_zh_CN.qm
 
-%files -n libukui-search-dev
+%files -n libukui-search-devel
 %{_includedir}/ukui-search/*
+%{_libdir}/pkgconfig/*.pc
 %{_libdir}/libukui-search.so
 
 
@@ -125,6 +129,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Tue Nov 1 2022 peijiankang <peijiankang@kylinos.cn> - 3.1-1
+- update version to 3.1
+
 * Wed Jun 22 2022 peijiankang <peijiankang@kylinos.cn> - 0.4.2-3
 - fix install error
 
