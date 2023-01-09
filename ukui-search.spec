@@ -2,7 +2,7 @@
 
 Name:           ukui-search
 Version:        3.1
-Release:        1
+Release:        2
 Summary:        a user-wide desktop search feature of UKUI desktop environment
 License:        GPL-2.0-or-later and GPL-3.0-or-later and Apache-2.0
 URL:            http://www.ukui.org
@@ -86,6 +86,7 @@ make INSTALL_ROOT=%{buildroot} install
 mkdir -p %{buildroot}/usr/share/ukui-search/translations/
 cp -r %{_builddir}/%{name}-%{version}/build/frontend/.qm/*.qm %{buildroot}/usr/share/ukui-search/translations/
 cp -r %{_builddir}/%{name}-%{version}/build/libsearch/.qm/*.qm %{buildroot}/usr/share/ukui-search/translations/
+cp -r %{_builddir}/%{name}-%{version}/build/search-ukcc-plugin/.qm/*.qm %{buildroot}/usr/share/ukui-search/search-ukcc-plugin/translations/
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -129,6 +130,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Mon Jan 9 2023 peijiankang <peijiankang@kylinos.cn> - 3.1-2
+- add search-ukcc-plugin translation files
+
 * Tue Nov 1 2022 peijiankang <peijiankang@kylinos.cn> - 3.1-1
 - update version to 3.1
 
