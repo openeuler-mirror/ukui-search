@@ -1,8 +1,6 @@
-%define debug_package %{nil}
-
 Name:           ukui-search
 Version:        3.1
-Release:        2
+Release:        3
 Summary:        a user-wide desktop search feature of UKUI desktop environment
 License:        GPL-2.0-or-later and GPL-3.0-or-later and Apache-2.0
 URL:            http://www.ukui.org
@@ -75,13 +73,13 @@ Summary:  ukui-search-systemdbus is a systembus interface to modify max_user_wat
 
 %build
 mkdir build && cd build
-qmake-qt5 ..
-make -j4
+%{qmake_qt5} ..
+%{make_build}
 cd ..
 %install
 rm -rf $RPM_BUILD_ROOT 
 cd build
-make INSTALL_ROOT=%{buildroot} install
+%{make_install} INSTALL_ROOT=%{buildroot}
 
 mkdir -p %{buildroot}/usr/share/ukui-search/translations/
 cp -r %{_builddir}/%{name}-%{version}/build/frontend/.qm/*.qm %{buildroot}/usr/share/ukui-search/translations/
@@ -130,6 +128,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Fri Feb 10 2023 peijiankang <peijiankang@kylinos.cn> - 3.1-3
+- add build debuginfo and debugsource
+
 * Mon Jan 9 2023 peijiankang <peijiankang@kylinos.cn> - 3.1-2
 - add search-ukcc-plugin translation files
 
