@@ -1,0 +1,55 @@
+From 1bdde6b56b3d7812f6a8ed6dd26494a467f09f48 Mon Sep 17 00:00:00 2001
+From: peijiankang <peijiankang@kylinos.cn>
+Date: Thu, 15 Jun 2023 18:27:12 +0800
+Subject: [PATCH] fix coredump of ukui-search
+
+---
+ libsearch/index/ocrobject.cpp | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
+
+diff --git a/libsearch/index/ocrobject.cpp b/libsearch/index/ocrobject.cpp
+index 6d3d717..f9f9a6d 100644
+--- a/libsearch/index/ocrobject.cpp
++++ b/libsearch/index/ocrobject.cpp
+@@ -43,6 +43,9 @@ void OcrObject::getTxtContent(QString &path, QString &textcontent)
+ //    }
+ 
+ //多进程版本
++    // set locale to "C" for tesseract
++    char *old_ctype = strdup(setlocale(LC_ALL, NULL));
++    setlocale(LC_ALL, "C");
+     //qDebug() << "path:" << path;
+     tesseract::TessBaseAPI  *api = new tesseract::TessBaseAPI();
+     if (api->Init(NULL, "chi_sim")) {
+@@ -72,6 +75,9 @@ void OcrObject::getTxtContent(QString &path, QString &textcontent)
+         delete api;
+         api = nullptr;
+     }
++    // restore your previous locale
++    setlocale(LC_ALL, old_ctype);
++    free(old_ctype);
+ }
+ 
+ OcrObject::OcrObject(QObject *parent) : QObject(parent)
+@@ -90,10 +96,18 @@ OcrObject::~OcrObject()
+ 
+ void OcrObject::init()
+ {
++    // set locale to "C" for tesseract
++    char *old_ctype = strdup(setlocale(LC_ALL, NULL));
++    setlocale(LC_ALL, "C");
++
+     m_api = new tesseract::TessBaseAPI();
+     if (m_api->Init(NULL, "chi_sim")) {
+         qDebug() << "Could not initialize tesseract.\n";
+         return;
+     }
+     m_api->SetVariable("user_defined_dpi", "1080");//图片中未标明分辨率的默认设置为1080
++
++    // restore your previous locale
++    setlocale(LC_ALL, old_ctype);
++    free(old_ctype);
+ }
+-- 
+2.33.0
+
