@@ -1,10 +1,11 @@
 Name:           ukui-search
 Version:        3.1
-Release:        3
+Release:        4
 Summary:        a user-wide desktop search feature of UKUI desktop environment
 License:        GPL-2.0-or-later and GPL-3.0-or-later and Apache-2.0
 URL:            http://www.ukui.org
 Source0:        %{name}-%{version}.tar.gz
+Patch01:        0001-fix-coredump-of-ukui-search.patch
 
 BuildRequires: pkgconf
 BuildRequires: gsettings-qt-devel
@@ -70,6 +71,7 @@ Summary:  ukui-search-systemdbus is a systembus interface to modify max_user_wat
 
 %prep
 %setup -q
+%patch01 -p1
 
 %build
 mkdir build && cd build
@@ -128,6 +130,12 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Thu Jun 15 2023 peijiankang <peijiankang@kylinos.cn> - 3.1-4
+- Type:bugfix
+- ID:NA
+- SUG:NA
+- DESC: add 0001-fix-coredump-of-ukui-search.patch
+
 * Fri Feb 10 2023 peijiankang <peijiankang@kylinos.cn> - 3.1-3
 - add build debuginfo and debugsource
 
