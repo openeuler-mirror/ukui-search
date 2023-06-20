@@ -1,10 +1,11 @@
 Name:           ukui-search
 Version:        3.1
-Release:        3
+Release:        4
 Summary:        a user-wide desktop search feature of UKUI desktop environment
 License:        GPL-2.0-or-later and GPL-3.0-or-later and Apache-2.0
 URL:            http://www.ukui.org
 Source0:        %{name}-%{version}.tar.gz
+Patch0:         fix-clang.patch
 
 BuildRequires: pkgconf
 BuildRequires: gsettings-qt-devel
@@ -69,9 +70,13 @@ Summary:  ukui-search-systemdbus is a systembus interface to modify max_user_wat
 %{summary}.
 
 %prep
-%setup -q
+%autosetup -p1
 
 %build
+%if "%toolchain" == "clang"
+	export CFLAGS="$CFLAGS -Wno-error=uninitialized"
+	export CXXFLAGS="$CXXFLAGS -Wno-error=uninitialized"
+%endif
 mkdir build && cd build
 %{qmake_qt5} ..
 %{make_build}
@@ -128,6 +133,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Tue Jun 20 2023 yoo <sunyuechi@iscas.ac.cn> - 3.1-4
+- fix clang build error
+
 * Fri Feb 10 2023 peijiankang <peijiankang@kylinos.cn> - 3.1-3
 - add build debuginfo and debugsource
 
