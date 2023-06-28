@@ -1,0 +1,12 @@
+diff -u -r ukui-search-3.1/libsearch/file-utils.cpp ukui-search-3.1/libsearch/file-utils.cpp
+--- ukui-search-3.1/libsearch/file-utils.cpp	2022-04-16 10:10:16.000000000 +0800
++++ ukui-search-3.1/libsearch/file-utils.cpp	2023-06-17 23:05:28.000000000 +0800
+@@ -920,7 +920,7 @@
+         return true;
+     }
+     //比较前四位是否为对应值来判断OpenXML类型文件是否加密
+-    if (encrypt[0] == 0x50 && encrypt[1] == 0x4b && encrypt[2] == 0x03 && encrypt[3] == 0x04) {
++		if (static_cast<int>(encrypt[0]) == 0x50 && static_cast<int>(encrypt[1]) == 0x4b && static_cast<int>(encrypt[2]) == 0x03 && static_cast<int>(encrypt[3]) == 0x04) {
+         return false;
+     } else {
+         qDebug() << "Encrypt!" << path;
